@@ -14,7 +14,7 @@ spec:
         app: frontend
     spec:
       containers:
-        - image: cheapacr.azurecr.io/frontend:186b29282f57038699b84909d1bac5e2de237774
+        - image: cheapacr.azurecr.io/frontend:bc272514303c4be2c2f47a39ea9c2984385e7821
           name: frontend
           ports:
             - containerPort: 3000
