@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - image: cheapacr.azurecr.io/frontend:186b29282f57038699b84909d1bac5e2de237774
+          name: frontend
+          ports:
+            - containerPort: 3000
+          envFrom:
+          - secretRef:
+              name: frontend-secret

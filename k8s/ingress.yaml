@@ -1,0 +1,8 @@
+apiVersion: x.getambassador.io/v3alpha1
+kind: AmbassadorMapping
+metadata:
+  name: frontend
+spec:
+  hostname: "*"
+  prefix: / # root
+  service: kustomize-frontend:3000
