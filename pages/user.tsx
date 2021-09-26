@@ -89,14 +89,16 @@ function User(props: IUser) {
                         description={JSON.stringify(repo.error)}
                       />
                     )}
-                    {repo.warning && (
-                      <Alert
-                        message="Warning"
-                        type="warning"
-                        showIcon
-                        description={JSON.stringify(repo.warning)}
-                      />
-                    )}
+                    {repo.warning &&
+                      repo.warning.length > 0 &&
+                      repo.warning[0] !== null && (
+                        <Alert
+                          message="Warning"
+                          type="warning"
+                          showIcon
+                          description={JSON.stringify(repo.warning)}
+                        />
+                      )}
                     {!repo.error && !repo.warning && (
                       <Alert message="Success" type="success" showIcon />
                     )}
