@@ -89,7 +89,6 @@ function User(props: IUser) {
                         description={JSON.stringify(repo.error)}
                       />
                     )}
-                    {console.log(repo.warning[0] == null)}
                     {repo.warning &&
                       repo.warning.length > 0 &&
                       repo.warning[0] !== null && (
