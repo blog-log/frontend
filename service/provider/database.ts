@@ -1,7 +1,3 @@
-import {
-  DATABASE_DOCUMENT_SEARCH_URL,
-  DATABASE_REPO_SEARCH_URL,
-} from "../../constants/services";
 import { repoIdToName, repoNameToId } from "../adapter/repo";
 
 export interface IDocument {
@@ -15,7 +11,7 @@ export interface IDocument {
 export interface IRepo {
   id: string;
   error: any;
-  warning: string;
+  warning: (string | null)[];
 }
 
 interface DocumentSearchResponse {
@@ -31,8 +27,8 @@ interface RepoSearchResponse {
 }
 
 export class RepoProvider {
-  documentSearchUrl = DATABASE_DOCUMENT_SEARCH_URL;
-  repoSearchUrl = DATABASE_REPO_SEARCH_URL;
+  documentSearchUrl = `${process.env.DATASTORE_URL}/document/search`;
+  repoSearchUrl = `${process.env.DATASTORE_URL}/repo/search`;
 
   searchDocuments(repos?: string[]): Promise<void | IDocument[]> {
     var headers = new Headers();

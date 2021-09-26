@@ -1,5 +1,3 @@
-import { SEARCH_BASE_URL } from "../../constants/services";
-
 export interface IPage {
   id: string;
   repo: string;
@@ -10,9 +8,7 @@ export interface IPage {
 }
 
 export class SearchProvider {
-  serviceUrl = SEARCH_BASE_URL;
-
-  searchPath = "search";
+  searchDocumentUrl = `${process.env.SEARCHER_URL}/document/search`;
 
   search(query: string): Promise<void | IPage[]> {
     var requestOptions: RequestInit = {
@@ -20,7 +16,7 @@ export class SearchProvider {
       redirect: "follow",
     };
 
-    var url = new URL(`${this.serviceUrl}/${this.searchPath}`);
+    var url = new URL(this.searchDocumentUrl);
 
     var params = { query };
 
