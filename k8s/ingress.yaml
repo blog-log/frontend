@@ -5,4 +5,5 @@ metadata:
 spec:
   hostname: "*"
   prefix: / # root
+  timeout_ms: 10000
   service: kustomize-frontend:3000
