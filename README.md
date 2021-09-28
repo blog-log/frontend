@@ -2,4 +2,4 @@
 
 TODO
 
-test
+deploy
