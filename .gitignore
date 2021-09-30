@@ -39,4 +39,4 @@ yarn-error.log*
 .serverless
 .serverless_nextjs
 
-k8s/secret.yaml
+k8s/*secret*.yaml
