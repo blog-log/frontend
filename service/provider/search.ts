@@ -11,16 +11,19 @@ export class SearchProvider {
   searchDocumentUrl = `${process.env.SEARCHER_URL}/document/search`;
 
   search(query: string): Promise<void | IPage[]> {
+    var headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
     var requestOptions: RequestInit = {
-      method: "GET",
+      method: "POST",
       redirect: "follow",
+      headers,
+      body: JSON.stringify({
+        query,
+      }),
     };
 
     var url = new URL(this.searchDocumentUrl);
-
-    var params = { query };
-
-    url.search = new URLSearchParams(params).toString();
 
     return fetch(url.toString(), requestOptions)
       .then((response) => response.json())
