@@ -7,3 +7,7 @@ spec:
   prefix: / # root
   timeout_ms: 10000
   service: kustomize-frontend:3000
+  retry_policy:
+    retry_on: "gateway-error"
+    num_retries: 5
+    per_try_timeout: 1s
