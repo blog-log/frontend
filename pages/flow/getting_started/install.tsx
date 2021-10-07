@@ -3,11 +3,14 @@ import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
 import { getSession, useSession } from "next-auth/client";
 import Link from "next/link";
+import getConfig from 'next/config'
 import React, { useEffect, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { SessionWithToken } from "../../../types/session";
 import { StyleMap } from "../../../types/style";
 import { UserProgress, getCurrentProgress } from "../../../utils/progress";
+
+const { publicRuntimeConfig } = getConfig()
 
 const { Title } = Typography;
 
@@ -108,7 +111,7 @@ title: This is an example title
     <div style={styles.CTAContainer}>
       <Link
         key="installer"
-        href={`https://github.com/apps/${process.env.NEXT_PUBLIC_GITHUB_APP_NAME}/installations/new`}
+        href={`https://github.com/apps/${publicRuntimeConfig.NEXT_PUBLIC_GITHUB_APP_NAME}/installations/new`}
         passHref={true}
       >
         <Button type="primary">Install</Button>
