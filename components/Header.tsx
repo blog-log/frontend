@@ -2,10 +2,13 @@ import { Button, PageHeader, Avatar, Menu, Dropdown } from "antd";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/client";
+import getConfig from 'next/config'
 
 import SearchBar from "./SearchBar";
 import { SessionWithToken } from "../types/session";
 import { StyleMap } from "../types/style";
+
+const { publicRuntimeConfig } = getConfig()
 
 function Header() {
   const router = useRouter();
@@ -53,7 +56,7 @@ const menu = (name: string) => (
     <Menu.Item key="3">
       <Link
         key="installer"
-        href={`https://github.com/apps/${process.env.NEXT_PUBLIC_GITHUB_APP_NAME}/installations/new`}
+        href={`https://github.com/apps/${publicRuntimeConfig.NEXT_PUBLIC_GITHUB_APP_NAME}/installations/new`}
         passHref={true}
       >
         Install
