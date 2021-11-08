@@ -4,9 +4,12 @@ import { Session } from "next-auth";
 import { getSession, signIn, useSession } from "next-auth/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { SessionWithToken } from "../../../types/session";
-import { StyleMap } from "../../../types/style";
-import { getCurrentProgress, UserProgress } from "../../../utils/progress";
+import { SessionWithToken } from "../../../common/types/session";
+import { StyleMap } from "../../../common/types/style";
+import {
+  getCurrentProgress,
+  UserProgress,
+} from "../../../common/utils/progress";
 
 const { Title } = Typography;
 

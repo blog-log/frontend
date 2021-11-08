@@ -1,4 +1,4 @@
-import { IDocument } from "../service/provider/database";
+import { IDocument } from "../../modules/user/services/database";
 
 export function getRepoSlug(page: IDocument): string {
   const splitRepo = page.repo.split("/");

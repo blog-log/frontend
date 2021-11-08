@@ -2,13 +2,13 @@
 import Image from "next/image";
 import TextLoop from "react-text-loop";
 import { Button, Typography, Steps, Divider } from "antd";
-import { StyleMap } from "../types/style";
+import { StyleMap } from "../common/types/style";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getSession, useSession } from "next-auth/client";
-import { SessionWithToken } from "../types/session";
+import { SessionWithToken } from "../common/types/session";
 import { useRouter } from "next/router";
-import { getCurrentProgress, UserProgress } from "../utils/progress";
+import { getCurrentProgress, UserProgress } from "../common/utils/progress";
 import { GetServerSideProps } from "next";
 
 const { Title } = Typography;

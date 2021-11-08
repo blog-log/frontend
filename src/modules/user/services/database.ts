@@ -1,4 +1,4 @@
-import { repoIdToName, repoNameToId } from "../adapter/repo";
+import { repoIdToName, repoNameToId } from "../../../common/utils/repo";
 
 export interface IDocument {
   id: string;
