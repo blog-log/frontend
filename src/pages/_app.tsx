@@ -1,4 +1,4 @@
-import "../styles/globals.scss";
+import "../common/styles/global.scss";
 import type { AppProps } from "next/app";
 import { Provider } from "next-auth/client";
 import { withRouter } from "next/router";
@@ -6,7 +6,7 @@ import { withRouter } from "next/router";
 import Basic, {
   BasicNoContentContainer,
   BasicOnlyContent,
-} from "../templates/Basic";
+} from "../common/components/templates/Basic/Basic";
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   // simple router

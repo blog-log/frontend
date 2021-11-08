@@ -3,14 +3,17 @@ import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
 import { getSession, useSession } from "next-auth/client";
 import Link from "next/link";
-import getConfig from 'next/config'
+import getConfig from "next/config";
 import React, { useEffect, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { SessionWithToken } from "../../../types/session";
-import { StyleMap } from "../../../types/style";
-import { UserProgress, getCurrentProgress } from "../../../utils/progress";
+import { SessionWithToken } from "../../../common/types/session";
+import { StyleMap } from "../../../common/types/style";
+import {
+  UserProgress,
+  getCurrentProgress,
+} from "../../../common/utils/progress";
 
-const { publicRuntimeConfig } = getConfig()
+const { publicRuntimeConfig } = getConfig();
 
 const { Title } = Typography;
 

@@ -1,10 +1,9 @@
 import { Card, Empty } from "antd";
 import Link from "next/link";
-import { IPage, SearchProvider } from "../service/provider/search";
-import { IDocument } from "../service/provider/database";
-import { StyleMap } from "../types/style";
+import { IPage, SearchProvider } from "../modules/search/services/search";
+import { StyleMap } from "../common/types/style";
 import { GetServerSideProps } from "next";
-import { getRepoSlug } from "../utils/path";
+import { getRepoSlug } from "../common/utils/path";
 
 interface ISearch {
   pages?: IPage[];

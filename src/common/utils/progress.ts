@@ -1,5 +1,5 @@
-import { GithubProvider } from "../service/provider/github";
-import { SessionWithToken } from "../types/session";
+import { GithubProvider } from "../../modules/signup/services/github";
+import { SessionWithToken } from "../../common/types/session";
 
 export enum UserProgress {
   Initial = -1, // user hasn't done anything yet

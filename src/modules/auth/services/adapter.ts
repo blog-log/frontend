@@ -1,5 +1,3 @@
-import NextAuth from "next-auth";
-import Providers from "next-auth/providers";
 import type { Adapter } from "next-auth/adapters";
 import { TypeORM } from "next-auth/adapters";
 import { FirebaseAdapter } from "@next-auth/firebase-adapter";
@@ -7,7 +5,7 @@ import { FirebaseAdapter } from "@next-auth/firebase-adapter";
 import firebase from "firebase/app";
 import "firebase/firestore";
 
-const getAdapter = (): ReturnType<Adapter> => {
+export const getAdapter = (): ReturnType<Adapter> => {
   switch (process.env.DATABASE_TYPE) {
     case "firebase":
       return getFirebaseAdapter();
@@ -43,38 +41,3 @@ function getTypeormAdapter(): ReturnType<Adapter> {
     synchronize: true,
   });
 }
-
-export default NextAuth({
-  // Configure one or more authentication providers
-  providers: [
-    Providers.GitHub({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-      scope: "read:org",
-    }),
-  ],
-  session: {
-    jwt: true,
-  },
-  callbacks: {
-    async session(session, token) {
-      // Add access_token to session
-      if (token?.accessToken) {
-        session.accessToken = token.accessToken;
-      }
-
-      return session;
-    },
-    async jwt(token, user, account) {
-      // Initial sign in
-      if (account && user) {
-        token.accessToken = account.accessToken;
-        return token;
-      }
-
-      return token;
-    },
-  },
-  adapter: getAdapter(),
-  debug: true,
-});

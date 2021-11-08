@@ -14,13 +14,13 @@ import {
   Button,
 } from "antd";
 
-import { IDocument, IRepo, RepoProvider } from "../service/provider/database";
-import { GithubProvider, IInstallation } from "../service/provider/github";
+import { IDocument, IRepo, RepoProvider } from "../modules/user/services/database";
+import { GithubProvider, IInstallation } from "../modules/signup/services/github";
 import { useRouter } from "next/router";
-import { SessionWithToken } from "../types/session";
-import { StyleMap } from "../types/style";
-import { repoIdToName, repoNameToId } from "../service/adapter/repo";
-import { getRepoSlug } from "../utils/path";
+import { SessionWithToken } from "../common/types/session";
+import { StyleMap } from "../common/types/style";
+import { repoIdToName, repoNameToId } from "../common/utils/repo";
+import { getRepoSlug } from "../common/utils/path";
 
 const { Title } = Typography;
 

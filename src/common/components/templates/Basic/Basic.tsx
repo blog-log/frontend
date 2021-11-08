@@ -1,8 +1,8 @@
 import { Layout, PageHeader } from "antd";
 import router from "next/router";
 import React from "react";
-import Header from "../components/Header";
-import { StyleMap } from "../types/style";
+import Header from "../../elements/Header/Header";
+import { StyleMap } from "../../../types/style";
 
 const { Content, Footer } = Layout;
 

@@ -2,13 +2,13 @@ import { Button, PageHeader, Avatar, Menu, Dropdown } from "antd";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/client";
-import getConfig from 'next/config'
+import getConfig from "next/config";
 
-import SearchBar from "./SearchBar";
-import { SessionWithToken } from "../types/session";
-import { StyleMap } from "../types/style";
+import SearchBar from "../SearchBar/SearchBar";
+import { SessionWithToken } from "../../../types/session";
+import { StyleMap } from "../../../types/style";
 
-const { publicRuntimeConfig } = getConfig()
+const { publicRuntimeConfig } = getConfig();
 
 function Header() {
   const router = useRouter();
@@ -33,7 +33,11 @@ function Header() {
         session &&
           session?.error !== "RefreshAccessTokenError" &&
           session?.user?.name && (
-            <Dropdown key="dropdown" overlay={menu(session?.user?.name)} trigger={["click"]}>
+            <Dropdown
+              key="dropdown"
+              overlay={menu(session?.user?.name)}
+              trigger={["click"]}
+            >
               <Avatar key="avatar" src={session.user?.image} />
             </Dropdown>
           ),
