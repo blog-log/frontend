@@ -23,7 +23,7 @@ function MyApp({
     case "/":
       return (
         <Provider session={pageProps.session}>
-          <BasicNoContentContainer {...pageProps}>
+          <BasicNoContentContainer deviceType={deviceType} {...pageProps}>
             <Component {...pageProps} />
           </BasicNoContentContainer>
         </Provider>
@@ -31,7 +31,7 @@ function MyApp({
     case router.asPath.match(/^\/flow\/getting_started/)?.input:
       return (
         <Provider session={pageProps.session}>
-          <BasicOnlyContent {...pageProps}>
+          <BasicOnlyContent deviceType={deviceType} {...pageProps}>
             <Component {...pageProps} />
           </BasicOnlyContent>
         </Provider>
@@ -39,9 +39,9 @@ function MyApp({
     default:
       return (
         <Provider session={pageProps.session}>
-          <Basic {...pageProps}>
+          <BasicNoContentContainer deviceType={deviceType} {...pageProps}>
             <Component {...pageProps} />
-          </Basic>
+          </BasicNoContentContainer>
         </Provider>
       );
   }

@@ -2,7 +2,6 @@
 import Image from "next/image";
 import TextLoop from "react-text-loop";
 import { Button, Typography, Steps, Divider } from "antd";
-import { StyleMap } from "../common/types/style";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getSession, useSession } from "next-auth/client";
@@ -11,7 +10,6 @@ import { useRouter } from "next/router";
 import { getCurrentProgress, UserProgress } from "../common/utils/progress";
 import { GetServerSideProps } from "next";
 
-const { Title } = Typography;
 const { Step } = Steps;
 
 interface IHome {
@@ -156,73 +154,6 @@ function GSSteps() {
     </>
   );
 }
-
-/**
- * CTA - Call to Action
- * SD - Syncronize Diagram
- * GS - Get Started
- */
-const styles: StyleMap = {
-  ContentContainer: {
-    minHeight: "10rem",
-    padding: "3rem",
-    marginBottom: "3rem",
-    background: "white",
-  },
-  CTAContainer: {
-    margin: "3rem",
-    textAlign: "center",
-  },
-  CTATitleText: {
-    fontSize: "3.5rem",
-    fontFamily: "Roboto, sans-serif",
-    letterSpacing: ".1rem",
-    textTransform: "uppercase",
-  },
-  CTASubTitleText: {
-    fontSize: "1.5rem",
-    fontFamily: "Roboto, sans-serif",
-    letterSpacing: ".1rem",
-    textTransform: "uppercase",
-  },
-  CTAAction: {
-    marginTop: "3rem",
-    fontFamily: "Roboto, sans-serif",
-    letterSpacing: ".1rem",
-    textTransform: "uppercase",
-  },
-  GSTitle: {
-    fontSize: "2rem",
-    textTransform: "uppercase",
-    letterSpacing: ".1rem",
-  },
-  SDContainer: {
-    display: "flex",
-    marginTop: "3rem",
-    marginRight: "3rem",
-  },
-  SDImageContainer: {
-    flex: 1,
-    textAlign: "right",
-  },
-  SDDividerContainer: {
-    margin: "auto",
-    flex: 3,
-  },
-  SDDivider: {
-    borderTopColor: "rgba(0, 0, 0, 0.1)",
-  },
-  SDName: {
-    flex: 1,
-    margin: "auto 0",
-    fontWeight: 800,
-    textAlign: "left",
-  },
-  GSContainer: {
-    width: "60%",
-    margin: "auto",
-  },
-};
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);

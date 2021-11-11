@@ -1,7 +1,6 @@
 import { Card, Empty } from "antd";
 import Link from "next/link";
 import { IPage, SearchProvider } from "../modules/search/services/search";
-import { StyleMap } from "../common/types/style";
 import { GetServerSideProps } from "next";
 import { getRepoSlug } from "../common/utils/path";
 
@@ -12,7 +11,7 @@ interface ISearch {
 
 function Search(props: ISearch) {
   return (
-    <>
+    <div className="bg-white p-1 md:p-8 mb-4 md:mb-8 lg:mb-12">
       {props.pages &&
         props.pages.length > 0 &&
         props.pages.map((page, index) => (
@@ -23,8 +22,8 @@ function Search(props: ISearch) {
           >
             <a>
               <Card
+                className="m-8"
                 key={`${index}-${page.repo}-${page.path}`}
-                style={styles.Card}
                 hoverable
                 title={page.title}
               >
@@ -34,15 +33,9 @@ function Search(props: ISearch) {
           </Link>
         ))}
       {(!props.pages || props.pages.length === 0) && <Empty />}
-    </>
+    </div>
   );
 }
-
-const styles: StyleMap = {
-  Card: {
-    margin: "2rem",
-  },
-};
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const query = context.query["query"]?.toString();

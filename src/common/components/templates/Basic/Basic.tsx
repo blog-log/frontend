@@ -3,10 +3,9 @@ import router from "next/router";
 import Head from "next/head";
 import React from "react";
 import Header from "../../elements/Header/Header";
-import { StyleMap } from "../../../types/style";
 import { DeviceType } from "../../../utils/device";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 interface IProps {
   deviceType: DeviceType;
@@ -22,14 +21,13 @@ function Basic(props: IProps) {
           content="width=device-width, initial-scale=1.0, viewport-fit=cover"
         ></meta>
       </Head>
-      <Layout style={styles.Layout}>
+      <Layout className="min-h-screen">
         <Header deviceType={props.deviceType} />
         <Content className="p-2 md:p-6 lg:p-12">
-          <div style={styles.ContentContainer}>{props.children}</div>
+          <div className="bg-white p-1 md:p-8 mb-2 md:mb-8 lg:mb-12">
+            {props.children}
+          </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
       </Layout>
     </>
   );
@@ -44,12 +42,9 @@ export function BasicNoContentContainer(props: IProps) {
           content="width=device-width, initial-scale=1.0, viewport-fit=cover"
         ></meta>
       </Head>
-      <Layout style={styles.Layout}>
+      <Layout className="min-h-screen">
         <Header deviceType={props.deviceType} />
         <Content className="p-2 md:p-6 lg:p-12">{props.children}</Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
       </Layout>
     </>
   );
@@ -64,23 +59,18 @@ export function BasicOnlyContent(props: IProps) {
           content="width=device-width, initial-scale=1.0, viewport-fit=cover"
         ></meta>
       </Head>
-      <Layout style={styles.Layout}>
-        <PageHeader onBack={() => router.push("/")} title=" " />
-        <Content className="p-2 md:p-6 lg:p-12">{props.children}</Content>
+      <Layout className="min-h-screen">
+        {props.deviceType === DeviceType.WEB && (
+          <PageHeader
+            className="pt-4 pb-0 pr-6 pl-6"
+            onBack={() => router.push("/")}
+            title=" "
+          />
+        )}
+        <Content className="p-2 md:p-4">{props.children}</Content>
       </Layout>
     </>
   );
 }
-
-const styles: StyleMap = {
-  Layout: {
-    minHeight: "100vh",
-  },
-  ContentContainer: {
-    minHeight: "10rem",
-    padding: "3rem",
-    background: "white",
-  },
-};
 
 export default Basic;
