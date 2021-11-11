@@ -5,7 +5,6 @@ import { getSession, signIn, useSession } from "next-auth/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { SessionWithToken } from "../../../common/types/session";
-import { StyleMap } from "../../../common/types/style";
 import {
   getCurrentProgress,
   UserProgress,
@@ -85,34 +84,6 @@ const Completed = () => (
     </div>
   </div>
 );
-
-const styles: StyleMap = {
-  ContentContainer: {
-    minHeight: "10rem",
-    padding: "3rem",
-    marginBottom: "3rem",
-    background: "white",
-  },
-  CTAContainer: {
-    margin: "3rem",
-    textAlign: "center",
-  },
-  CodeContainer: {
-    width: "60%",
-    margin: "auto",
-  },
-  ButtonsContainer: {
-    display: "flex",
-  },
-  BackContainer: {
-    flex: 1,
-    textAlign: "center",
-  },
-  NextContainer: {
-    flex: 1,
-    textAlign: "center",
-  },
-};
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
