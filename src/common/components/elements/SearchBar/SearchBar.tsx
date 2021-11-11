@@ -13,9 +13,9 @@ function SearchBar(): ReactElement {
 
   return (
     <Search
+      className="w-44 md:w-60 lg:w-72"
       placeholder={router.query["query"]?.toString() || "input search text"}
       onSearch={onSearch}
-      style={{ width: 200 }}
     />
   );
 }

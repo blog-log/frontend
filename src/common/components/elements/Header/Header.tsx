@@ -1,4 +1,5 @@
 import { Button, PageHeader, Avatar, Menu, Dropdown } from "antd";
+import { HomeOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/client";
@@ -7,10 +8,15 @@ import getConfig from "next/config";
 import SearchBar from "../SearchBar/SearchBar";
 import { SessionWithToken } from "../../../types/session";
 import { StyleMap } from "../../../types/style";
+import { DeviceType } from "../../../utils/device";
 
 const { publicRuntimeConfig } = getConfig();
 
-function Header() {
+interface IHeader {
+  deviceType: DeviceType;
+}
+
+function Header(props: IHeader) {
   const router = useRouter();
   const [session, loading]: [SessionWithToken | null, boolean] = useSession();
 
@@ -22,7 +28,8 @@ function Header() {
     <PageHeader
       style={styles.Header}
       onBack={handleBack}
-      title="BLOGLOG"
+      backIcon={<HomeOutlined className="text-2xl leading-none place-items-center" />}
+      title={props.deviceType === DeviceType.WEB ? "BLOGLOG" : null}
       extra={[
         <SearchBar key="searcher" />,
         (!session || session?.error === "RefreshAccessTokenError") && (
