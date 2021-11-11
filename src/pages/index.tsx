@@ -21,45 +21,61 @@ interface IHome {
 function Home(props: IHome) {
   return (
     <>
-      <div style={styles.ContentContainer}>
-        <div style={styles.CTAContainer}>
-          <Title style={styles.CTATitleText}>Stupid Simple</Title>
-          <Title style={styles.CTATitleText}>Docs as Code</Title>
+      <div className="bg-white p-1 md:p-8 mb-4 md:mb-8 lg:mb-12">
+        <div className="text-center m-4 md:m-8 lg:m-12">
+          <h1 className="uppercase font-semibold tracking-wide text-4xl sm:text-6xl md:text-7xl lg:text-8xl mb-4 md:m-8 lg:m-12">
+            Stupid Simple
+          </h1>
+          <h1 className="uppercase font-semibold tracking-wide text-4xl sm:text-6xl md:text-7xl lg:text-8xl mb-4 md:m-8 lg:m-12">
+            Docs as Code
+          </h1>
           {props.serverProgress === UserProgress.Initial && (
             <Link href="/flow/getting_started/signup" passHref={true}>
-              <Button type="primary" style={styles.CTAAction}>
+              <Button
+                type="primary"
+                size="large"
+                className="uppercase tracking-wide mt-2"
+              >
                 Get Started
               </Button>
             </Link>
           )}
           {props.serverProgress === UserProgress.SignedUp && (
             <Link href="/flow/getting_started/install" passHref={true}>
-              <Button type="primary" style={styles.CTAAction}>
+              <Button
+                type="primary"
+                size="large"
+                className="uppercase tracking-wide mt-2"
+              >
                 Almost Done
               </Button>
             </Link>
           )}
         </div>
       </div>
-      <div style={styles.ContentContainer}>
-        <div style={styles.CTAContainer}>
+      <div className="bg-white p-1 md:p-8 mb-4 md:mb-8 lg:mb-12">
+        <div className="text-center m-4 md:m-8 lg:m-12">
           <SyncronizeDiagram />
         </div>
       </div>
-      <div style={styles.ContentContainer}>
-        <div style={styles.CTAContainer}>
-          <Title style={styles.CTATitleText}>
+      <div className="bg-white p-1 md:p-8 mb-4 md:mb-8 lg:mb-12">
+        <div className="text-center m-4 md:m-8 lg:m-12">
+          <h1 className="uppercase font-semibold tracking-wide text-2xl sm:text-3xl md:text-5xl lg:text-7xl mb-4 md:m-8 lg:m-12">
             Stop{" "}
             <TextLoop
               children={["Wasting Time", "Redeploying", "Manually Versioning"]}
             />
-          </Title>
+          </h1>
         </div>
       </div>
-      <div style={styles.ContentContainer}>
-        <div style={styles.CTAContainer}>
-          <div id="getting-started" style={styles.GSContainer}>
-            <Divider style={styles.GSTitle}>How To Get Started</Divider>
+      <div className="bg-white p-1 md:p-8 mb-4 md:mb-8 lg:mb-12">
+        <div className="text-center m-4 md:m-8 lg:m-12">
+          <div id="getting-started" className="w-3/5 m-auto">
+            <Divider>
+              <span className="uppercase font-semibold tracking-wide text-1xl sm:text-2xl md:text-3xl lg:text-5xl">
+                How To Get Started
+              </span>
+            </Divider>
             <GSSteps />
           </div>
         </div>
@@ -71,17 +87,19 @@ function Home(props: IHome) {
 function SyncronizeDiagram() {
   return (
     <>
-      <Title style={styles.CTASubTitleText}>
+      <h1 className="uppercase tracking-wide font-semibold text-xl sm:text-2xl md:text-4xl lg:text-6xl">
         Quickly and Automatically syncronize your Docs with your VCS
-      </Title>
-      <div style={styles.SDContainer}>
-        <div style={styles.SDImageContainer}>
-          <Image src="/github.svg" alt="Github Logo" height="80%" width="80%" />
+      </h1>
+      <div className="flex mt-4 md:m-8 lg:m-12 items-center">
+        <div className="flex text-right relative h-10 md:h-15 lg:h-20 w-10 md:w-15 lg:w-20">
+          <Image src="/github.svg" alt="Github Logo" layout="fill" />
         </div>
-        <div style={styles.SDDividerContainer}>
-          <Divider style={styles.SDDivider}>On Push</Divider>
+        <div className="m-auto flex-grow">
+          <Divider className="border-gray-200 p-0">
+            <span className="text-base md:text-lg lg:text-xl">On Push</span>
+          </Divider>
         </div>
-        <div style={{ ...styles.CTASubTitleText, ...styles.SDName }}>
+        <div className="text-left m-auto uppercase text-lg md:text-2xl lg:text-4xl tracking-wide font-semibold">
           BlogLog
         </div>
       </div>

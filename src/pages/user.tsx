@@ -14,8 +14,15 @@ import {
   Button,
 } from "antd";
 
-import { IDocument, IRepo, RepoProvider } from "../modules/user/services/database";
-import { GithubProvider, IInstallation } from "../modules/signup/services/github";
+import {
+  IDocument,
+  IRepo,
+  RepoProvider,
+} from "../modules/user/services/database";
+import {
+  GithubProvider,
+  IInstallation,
+} from "../modules/signup/services/github";
 import { useRouter } from "next/router";
 import { SessionWithToken } from "../common/types/session";
 import { StyleMap } from "../common/types/style";
