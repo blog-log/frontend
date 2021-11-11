@@ -25,7 +25,6 @@ import {
 } from "../modules/signup/services/github";
 import { useRouter } from "next/router";
 import { SessionWithToken } from "../common/types/session";
-import { StyleMap } from "../common/types/style";
 import { repoIdToName, repoNameToId } from "../common/utils/repo";
 import { getRepoSlug } from "../common/utils/path";
 
@@ -49,7 +48,7 @@ function User(props: IUser) {
   if (!loading && !session) return <p>Access Denied</p>;
 
   return (
-    <>
+    <div className="bg-white p-3 md:p-8 mb-4 md:mb-8 lg:mb-12">
       {router.query?.setup_action && router.query?.setup_action === "install" && (
         // onClose removes any query params so on refresh alert will not show again
         <InstallAlert onClose={() => router.replace("/user")} />
@@ -65,10 +64,10 @@ function User(props: IUser) {
       )}
 
       <Divider orientation="left">Installations</Divider>
-      <Row gutter={[16, 16]}>
+      <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {props.installations &&
           props.installations.map((installation, index) => (
-            <Col key={index} span={8}>
+            <div key={index}>
               <Link passHref href={installation.url}>
                 <a>
                   <Card hoverable key={`${index}-${installation.url}`}>
@@ -76,15 +75,15 @@ function User(props: IUser) {
                   </Card>
                 </a>
               </Link>
-            </Col>
+            </div>
           ))}
-      </Row>
+      </div>
 
       <Divider orientation="left">Repositories</Divider>
-      <Row gutter={[16, 16]}>
+      <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {props.repos &&
           props.repos.map((repo, index) => (
-            <Col key={index} span={8}>
+            <div key={index}>
               <Link passHref href={repo.id}>
                 <a>
                   <Card hoverable key={`${index}-${repo}`} title={repo.id}>
@@ -112,14 +111,14 @@ function User(props: IUser) {
                   </Card>
                 </a>
               </Link>
-            </Col>
+            </div>
           ))}
-      </Row>
+      </div>
       <Divider orientation="left">Documents</Divider>
-      <Row gutter={[16, 16]}>
+      <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {props.docs &&
           props.docs.map((doc, index) => (
-            <Col key={index} span={8}>
+            <div key={index}>
               <Popover
                 content={
                   <DocumentPopoverContent
@@ -137,10 +136,10 @@ function User(props: IUser) {
                   content description
                 </Card>
               </Popover>
-            </Col>
+            </div>
           ))}
-      </Row>
-    </>
+      </div>
+    </div>
   );
 }
 
@@ -157,11 +156,11 @@ function DocumentPopoverContent({
     <Row gutter={[4, 4]}>
       <Col key={1} span={12}>
         <Button
+          className="flex justify-center items-center"
           shape="circle"
           icon={
             <Image src="/github.svg" alt="Github Logo" height={20} width={20} />
           }
-          style={styles.DocumentLinkButton}
           onClick={() => router.push(ghLink)}
         />
       </Col>
@@ -203,7 +202,7 @@ const NeedInstallAlert = () => (
       <>
         Please completed github app installation step{" "}
         <Link passHref href="/flow/getting_started/install">
-          <span style={styles.Link}>here</span>
+          <span className="cursor-pointer underline">here</span>
         </Link>
       </>
     }
@@ -211,18 +210,6 @@ const NeedInstallAlert = () => (
     showIcon
   />
 );
-
-const styles: StyleMap = {
-  Link: {
-    cursor: "pointer",
-    textDecoration: "underline",
-  },
-  DocumentLinkButton: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-};
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);

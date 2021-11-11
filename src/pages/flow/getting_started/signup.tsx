@@ -40,22 +40,22 @@ function SignUp(props: ISignUp) {
 }
 
 const Ready = () => (
-  <div style={styles.ContentContainer}>
-    <div style={styles.CTAContainer}>
+  <div className="bg-white p-3 md:p-8 mb-4 md:mb-8 lg:mb-12">
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Title level={4}>The first step is to sign in to your VCS</Title>
     </div>
-    <div style={styles.CTAContainer}>
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Title level={4}>Currently only github is supported</Title>
     </div>
-    <div style={styles.CTAContainer}>
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Button onClick={() => signIn()} type="primary">
         Sign Up
       </Button>
     </div>
 
-    <div style={styles.ButtonsContainer}>
-      <div style={styles.BackContainer}></div>
-      <div style={styles.NextContainer}>
+    <div className="flex">
+      <div className="flex-1 text-center"></div>
+      <div className="flex-1 text-center">
         {/* fake button does not do anything */}
         <Popover content="you are not signed in">
           <Button disabled type="primary">
@@ -68,16 +68,16 @@ const Ready = () => (
 );
 
 const Completed = () => (
-  <div style={styles.ContentContainer}>
-    <div style={styles.CTAContainer}>
+  <div className="bg-white p-3 md:p-8 mb-4 md:mb-8 lg:mb-12">
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Title level={4}>Hurray!!! You are signed in</Title>
     </div>
-    <div style={styles.CTAContainer}>
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Title level={4}>Please go to the next step</Title>
     </div>
-    <div style={styles.ButtonsContainer}>
-      <div style={styles.BackContainer}></div>
-      <div style={styles.NextContainer}>
+    <div className="flex">
+      <div className="flex-1 text-center"></div>
+      <div className="flex-1 text-center">
         <Link passHref href="/flow/getting_started/install">
           <Button type="primary">Next</Button>
         </Link>

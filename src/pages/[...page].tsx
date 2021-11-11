@@ -9,13 +9,13 @@ interface IPage {
 
 function Page(props: IPage) {
   return (
-    <>
+    <div className="bg-white p-2 md:p-8 m-0 md:m-auto w-full md:w-7/12">
       {props.content && props.content.body && (
         <ReactMarkdown remarkPlugins={[gfm]}>
           {props.content.body}
         </ReactMarkdown>
       )}
-    </>
+    </div>
   );
 }
 

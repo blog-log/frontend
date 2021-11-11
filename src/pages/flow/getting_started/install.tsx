@@ -7,7 +7,6 @@ import getConfig from "next/config";
 import React, { useEffect, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { SessionWithToken } from "../../../common/types/session";
-import { StyleMap } from "../../../common/types/style";
 import {
   UserProgress,
   getCurrentProgress,
@@ -44,20 +43,20 @@ function Install(props: IInstall) {
 }
 
 const NotReady = () => (
-  <div style={styles.ContentContainer}>
-    <div style={styles.CTAContainer}>
+  <div className="bg-white p-3 md:p-8 mb-4 md:mb-8 lg:mb-12">
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Title level={4}>You are not signed in</Title>
     </div>
-    <div style={styles.CTAContainer}>
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Title level={4}>Please go back to the previous step</Title>
     </div>
-    <div style={styles.ButtonsContainer}>
-      <div style={styles.BackContainer}>
+    <div className="flex">
+      <div className="flex-1 text-center">
         <Link passHref href="/flow/getting_started/signup">
           <Button type="primary">Back</Button>
         </Link>
       </div>
-      <div style={styles.NextContainer}>
+      <div className="flex-1 text-center">
         {/* fake button does not do anything */}
         <Popover content="you have not installed the github app">
           <Button disabled type="primary">
@@ -70,26 +69,26 @@ const NotReady = () => (
 );
 
 const Ready = () => (
-  <div style={styles.ContentContainer}>
-    <div style={styles.CTAContainer}>
+  <div className="bg-white p-3 md:p-8 mb-4 md:mb-8 lg:mb-12">
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Title level={5}>
         The second step is to install the github app onto either your account or
         organization and to give it access to the repositories you want
       </Title>
     </div>
-    <div style={styles.CTAContainer}>
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Title level={5}>
         The github app will look for qualifying markdown files in your
         repositories and sync their content with BLOGLOG
       </Title>
     </div>
-    <div style={styles.CTAContainer}>
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Title level={5}>
         For markdown files to qualify for BLOGLOG they need a title field as
         frontmatter
       </Title>
     </div>
-    <div style={styles.CodeContainer}>
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Title level={5}>Example</Title>
       <SyntaxHighlighter language="markdown">
         {`---
@@ -100,10 +99,10 @@ title: This is an example title
 `}
       </SyntaxHighlighter>
     </div>
-    <div style={styles.CTAContainer}>
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Title level={5}>Markdown without this title field will be ignored</Title>
     </div>
-    <div style={styles.CTAContainer}>
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Title level={5}>
         For a simple working example repository fork this repository{" "}
         <Link passHref href="https://github.com/blog-log/example">
@@ -111,7 +110,7 @@ title: This is an example title
         </Link>
       </Title>
     </div>
-    <div style={styles.CTAContainer}>
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Link
         key="installer"
         href={`https://github.com/apps/${publicRuntimeConfig.NEXT_PUBLIC_GITHUB_APP_NAME}/installations/new`}
@@ -120,9 +119,9 @@ title: This is an example title
         <Button type="primary">Install</Button>
       </Link>
     </div>
-    <div style={styles.ButtonsContainer}>
-      <div style={styles.BackContainer}></div>
-      <div style={styles.NextContainer}>
+    <div className="flex">
+      <div className="flex-1 text-center"></div>
+      <div className="flex-1 text-center">
         {/* fake button does not do anything */}
         <Popover content="you have not installed the github app">
           <Button disabled type="primary">
@@ -135,16 +134,16 @@ title: This is an example title
 );
 
 const Completed = () => (
-  <div style={styles.ContentContainer}>
-    <div style={styles.CTAContainer}>
+  <div className="bg-white p-3 md:p-8 mb-4 md:mb-8 lg:mb-12">
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Title level={4}>Hurray!!! You have installed the github app</Title>
     </div>
-    <div style={styles.CTAContainer}>
+    <div className="text-center w-full md:w-7/12 m-auto mb-4 md:mb-8 lg:mb-12">
       <Title level={4}>You are done</Title>
     </div>
-    <div style={styles.ButtonsContainer}>
-      <div style={styles.BackContainer}></div>
-      <div style={styles.NextContainer}>
+    <div className="flex">
+      <div className="flex-1 text-center"></div>
+      <div className="flex-1 text-center">
         <Link passHref href="/user">
           <Button type="primary">Profit</Button>
         </Link>
@@ -152,34 +151,6 @@ const Completed = () => (
     </div>
   </div>
 );
-
-const styles: StyleMap = {
-  ContentContainer: {
-    minHeight: "10rem",
-    padding: "3rem",
-    marginBottom: "3rem",
-    background: "white",
-  },
-  CTAContainer: {
-    margin: "3rem",
-    textAlign: "center",
-  },
-  CodeContainer: {
-    width: "60%",
-    margin: "auto",
-  },
-  ButtonsContainer: {
-    display: "flex",
-  },
-  BackContainer: {
-    flex: 1,
-    textAlign: "center",
-  },
-  NextContainer: {
-    flex: 1,
-    textAlign: "center",
-  },
-};
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
