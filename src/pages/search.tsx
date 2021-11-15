@@ -1,13 +1,17 @@
-import { Card, Empty } from "antd";
+import { Card, Empty, Typography } from "antd";
 import Link from "next/link";
 import { IPage, SearchProvider } from "../modules/search/services/search";
 import { GetServerSideProps } from "next";
 import { getRepoSlug } from "../common/utils/path";
+import removeMarkdown from "remove-markdown";
+import fm from "front-matter";
 
 interface ISearch {
   pages?: IPage[];
   error?: Error;
 }
+
+const { Paragraph, Text } = Typography;
 
 function Search(props: ISearch) {
   return (
@@ -27,7 +31,14 @@ function Search(props: ISearch) {
                 hoverable
                 title={page.title}
               >
-                content description
+                <Paragraph ellipsis={{ rows: 3, expandable: false }}>
+                  {removeMarkdown(fm<string>(page.content).body, {
+                    stripListLeaders: true, // strip list leaders (default: true)
+                    listUnicodeChar: "", // char to insert instead of stripped list leaders (default: '')
+                    gfm: true, // support GitHub-Flavored Markdown (default: true)
+                    useImgAltText: true, // replace images with alt-text, if present (default: true)
+                  })}
+                </Paragraph>
               </Card>
             </a>
           </Link>

@@ -7,7 +7,6 @@ import getConfig from "next/config";
 
 import SearchBar from "../SearchBar/SearchBar";
 import { SessionWithToken } from "../../../types/session";
-import { StyleMap } from "../../../types/style";
 import { DeviceType } from "../../../utils/device";
 
 const { publicRuntimeConfig } = getConfig();
@@ -26,9 +25,11 @@ function Header(props: IHeader) {
 
   return (
     <PageHeader
-      style={styles.Header}
+      className="border-gray-400 bg-white"
       onBack={handleBack}
-      backIcon={<HomeOutlined className="text-2xl leading-none place-items-center" />}
+      backIcon={
+        <HomeOutlined className="text-2xl leading-none place-items-center" />
+      }
       title={props.deviceType === DeviceType.WEB ? "BLOGLOG" : null}
       extra={[
         <SearchBar key="searcher" />,
@@ -75,12 +76,5 @@ const menu = (name: string) => (
     </Menu.Item>
   </Menu>
 );
-
-const styles: StyleMap = {
-  Header: {
-    border: "1px solid rgb(235, 237, 240)",
-    background: "white",
-  },
-};
 
 export default Header;
