@@ -27,4 +27,5 @@ export default NextAuth({
   },
   adapter: getAdapter(),
   debug: true,
+  secret: process.env.NEXTAUTH_SECRET
 });
