@@ -2,11 +2,10 @@ import { Button, PageHeader, Avatar, Menu, Dropdown } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/client";
+import { signIn, signOut, useSession } from "next-auth/react";
 import getConfig from "next/config";
 
 import SearchBar from "../SearchBar/SearchBar";
-import { SessionWithToken } from "../../../types/session";
 import { DeviceType } from "../../../utils/device";
 
 const { publicRuntimeConfig } = getConfig();
@@ -17,7 +16,8 @@ interface IHeader {
 
 function Header(props: IHeader) {
   const router = useRouter();
-  const [session, loading]: [SessionWithToken | null, boolean] = useSession();
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
 
   function handleBack() {
     router.push("/");

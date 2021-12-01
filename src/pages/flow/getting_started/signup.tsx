@@ -1,25 +1,28 @@
-import { Popover, Button, Typography } from "antd";
+import { Layout, Popover, Button, Typography, PageHeader } from "antd";
 import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
-import { getSession, signIn, useSession } from "next-auth/client";
+import { getSession, signIn, useSession } from "next-auth/react";
 import Link from "next/link";
+import router from "next/router";
 import { useEffect, useState } from "react";
-import { SessionWithToken } from "../../../common/types/session";
+import { DeviceType } from "../../../common/utils/device";
 import {
   getCurrentProgress,
   UserProgress,
 } from "../../../common/utils/progress";
 
+const { Content } = Layout;
 const { Title } = Typography;
 
 interface ISignUp {
   serverProgress: UserProgress;
   session: Session | null;
+  deviceType: DeviceType;
 }
 
 function SignUp(props: ISignUp) {
   const [progress, setProgress] = useState<UserProgress>(props.serverProgress);
-  const [session]: [SessionWithToken | null, boolean] = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     async function getProgress() {
@@ -30,11 +33,20 @@ function SignUp(props: ISignUp) {
   }, [session]);
 
   return (
-    <>
-      {progress === UserProgress.Initial && <Ready />}
-      {progress === UserProgress.SignedUp && <Completed />}
-      {progress === UserProgress.Done && <Completed />}
-    </>
+    <Layout className="min-h-screen">
+      {props.deviceType === DeviceType.WEB && (
+        <PageHeader
+          className="pt-4 pb-0 pr-6 pl-6"
+          onBack={() => router.push("/")}
+          title=" "
+        />
+      )}
+      <Content className="p-2 md:p-4">
+        {progress === UserProgress.Initial && <Ready />}
+        {progress === UserProgress.SignedUp && <Completed />}
+        {progress === UserProgress.Done && <Completed />}
+      </Content>
+    </Layout>
   );
 }
 

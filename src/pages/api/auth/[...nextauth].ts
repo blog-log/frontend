@@ -1,28 +1,28 @@
 import NextAuth from "next-auth";
-import type { Session, User, Account } from "next-auth";
-import type { JWT } from "next-auth/jwt";
-import Providers from "next-auth/providers";
+import GithubProvider from "next-auth/providers/github";
 import { getAdapter } from "../../../modules/auth/services/adapter";
 import { getJwt, getSession } from "../../../modules/auth/services/callbacks";
 
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
-    Providers.GitHub({
+    GithubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
-      scope: "read:org",
+      authorization: {
+        params: { scope: "read:org" },
+      },
     }),
   ],
   session: {
-    jwt: true,
+    strategy: "jwt",
   },
   callbacks: {
-    async session(session: Session, token: User | JWT) {
+    async session({ session, token, user }) {
       return getSession(session, token);
     },
-    async jwt(token: JWT, user: User, account: Account) {
-      return getJwt(token, user, account);
+    async jwt({ token, user, account, profile, isNewUser }) {
+      return getJwt(token, account);
     },
   },
   adapter: getAdapter(),

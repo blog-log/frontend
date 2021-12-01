@@ -1,29 +1,32 @@
-import { Button, Popover, Typography } from "antd";
+import { Layout, Button, Popover, Typography, PageHeader } from "antd";
 import { GetServerSideProps } from "next";
+import router from "next/router";
 import { Session } from "next-auth";
-import { getSession, useSession } from "next-auth/client";
+import { getSession, useSession } from "next-auth/react";
 import Link from "next/link";
 import getConfig from "next/config";
 import React, { useEffect, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { SessionWithToken } from "../../../common/types/session";
 import {
   UserProgress,
   getCurrentProgress,
 } from "../../../common/utils/progress";
+import { DeviceType } from "../../../common/utils/device";
 
 const { publicRuntimeConfig } = getConfig();
 
+const { Content } = Layout;
 const { Title } = Typography;
 
 interface IInstall {
   serverProgress: UserProgress;
   session: Session | null;
+  deviceType: DeviceType;
 }
 
 function Install(props: IInstall) {
   const [progress, setProgress] = useState<UserProgress>(props.serverProgress);
-  const [session]: [SessionWithToken | null, boolean] = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     async function getProgress() {
@@ -34,11 +37,20 @@ function Install(props: IInstall) {
   }, [session]);
 
   return (
-    <>
-      {progress === UserProgress.Initial && <NotReady />}
-      {progress === UserProgress.SignedUp && <Ready />}
-      {progress === UserProgress.Done && <Completed />}
-    </>
+    <Layout className="min-h-screen">
+      {props.deviceType === DeviceType.WEB && (
+        <PageHeader
+          className="pt-4 pb-0 pr-6 pl-6"
+          onBack={() => router.push("/")}
+          title=" "
+        />
+      )}
+      <Content className="p-2 md:p-4">
+        {progress === UserProgress.Initial && <NotReady />}
+        {progress === UserProgress.SignedUp && <Ready />}
+        {progress === UserProgress.Done && <Completed />}
+      </Content>
+    </Layout>
   );
 }
 

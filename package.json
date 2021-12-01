@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next-auth/firebase-adapter": "^0.1.2",
+    "@next-auth/typeorm-legacy-adapter": "^0.1.2-next.20",
     "@octokit/rest": "^18.9.0",
     "@sap/hana-client": "^2.9.23",
     "@tailwindcss/typography": "^0.4.1",
@@ -18,11 +18,10 @@
     "@zeit/next-sass": "^1.0.1",
     "antd": "^4.16.9",
     "deepmerge": "^4.2.2",
-    "firebase": "^8.8.1",
     "front-matter": "^4.0.2",
     "less": "^2.7.3",
     "next": "^12.0.2",
-    "next-auth": "^3.27.3",
+    "next-auth": "4.0.0-beta.7",
     "pg": "^8.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

@@ -1,5 +1,5 @@
+import { Session } from "next-auth";
 import { GithubProvider } from "../../modules/signup/services/github";
-import { SessionWithToken } from "../../common/types/session";
 
 export enum UserProgress {
   Initial = -1, // user hasn't done anything yet
@@ -8,7 +8,7 @@ export enum UserProgress {
 }
 
 export const getCurrentProgress = async (
-  session: SessionWithToken | null
+  session: Session | null
 ): Promise<UserProgress> => {
   if (session && !session?.error && session?.accessToken) {
     // user signed in -- determine if installed app yet

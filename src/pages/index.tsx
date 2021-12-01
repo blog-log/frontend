@@ -1,84 +1,94 @@
 /* eslint-disable react/no-children-prop */
 import Image from "next/image";
 import TextLoop from "react-text-loop";
-import { Button, Typography, Steps, Divider } from "antd";
+import { Layout, Button, Steps, Divider } from "antd";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getSession, useSession } from "next-auth/client";
-import { SessionWithToken } from "../common/types/session";
+import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { getCurrentProgress, UserProgress } from "../common/utils/progress";
 import { GetServerSideProps } from "next";
+import Header from "../common/components/elements/Header/Header";
+import { DeviceType } from "../common/utils/device";
 
+const { Content } = Layout;
 const { Step } = Steps;
 
 interface IHome {
   serverProgress: UserProgress;
+  deviceType: DeviceType;
 }
 
 function Home(props: IHome) {
   return (
-    <>
-      <div className="bg-white p-1 md:p-8 mb-4 md:mb-8 lg:mb-12">
-        <div className="text-center m-4 md:m-8 lg:m-12">
-          <h1 className="uppercase font-semibold tracking-wide text-4xl sm:text-6xl md:text-7xl lg:text-8xl mb-4 md:m-8 lg:m-12">
-            Stupid Simple
-          </h1>
-          <h1 className="uppercase font-semibold tracking-wide text-4xl sm:text-6xl md:text-7xl lg:text-8xl mb-4 md:m-8 lg:m-12">
-            Docs as Code
-          </h1>
-          {props.serverProgress === UserProgress.Initial && (
-            <Link href="/flow/getting_started/signup" passHref={true}>
-              <Button
-                type="primary"
-                size="large"
-                className="uppercase tracking-wide mt-2"
-              >
-                Get Started
-              </Button>
-            </Link>
-          )}
-          {props.serverProgress === UserProgress.SignedUp && (
-            <Link href="/flow/getting_started/install" passHref={true}>
-              <Button
-                type="primary"
-                size="large"
-                className="uppercase tracking-wide mt-2"
-              >
-                Almost Done
-              </Button>
-            </Link>
-          )}
-        </div>
-      </div>
-      <div className="bg-white p-1 md:p-8 mb-4 md:mb-8 lg:mb-12">
-        <div className="text-center m-4 md:m-8 lg:m-12">
-          <SyncronizeDiagram />
-        </div>
-      </div>
-      <div className="bg-white p-1 md:p-8 mb-4 md:mb-8 lg:mb-12">
-        <div className="text-center m-4 md:m-8 lg:m-12">
-          <h1 className="uppercase font-semibold tracking-wide text-2xl sm:text-3xl md:text-5xl lg:text-7xl mb-4 md:m-8 lg:m-12">
-            Stop{" "}
-            <TextLoop
-              children={["Wasting Time", "Redeploying", "Manually Versioning"]}
-            />
-          </h1>
-        </div>
-      </div>
-      <div className="bg-white p-1 md:p-8 mb-4 md:mb-8 lg:mb-12">
-        <div className="text-center m-4 md:m-8 lg:m-12">
-          <div id="getting-started" className="w-3/5 m-auto">
-            <Divider>
-              <span className="uppercase font-semibold tracking-wide text-1xl sm:text-2xl md:text-3xl lg:text-5xl">
-                How To Get Started
-              </span>
-            </Divider>
-            <GSSteps />
+    <Layout>
+      <Header deviceType={props.deviceType} />
+      <Content className="p-2 md:p-6 lg:p-12">
+        <div className="bg-white p-1 md:p-8 mb-4 md:mb-8 lg:mb-12">
+          <div className="text-center m-4 md:m-8 lg:m-12">
+            <h1 className="uppercase font-semibold tracking-wide text-4xl sm:text-6xl md:text-7xl lg:text-8xl mb-4 md:m-8 lg:m-12">
+              Stupid Simple
+            </h1>
+            <h1 className="uppercase font-semibold tracking-wide text-4xl sm:text-6xl md:text-7xl lg:text-8xl mb-4 md:m-8 lg:m-12">
+              Docs as Code
+            </h1>
+            {props.serverProgress === UserProgress.Initial && (
+              <Link href="/flow/getting_started/signup" passHref={true}>
+                <Button
+                  type="primary"
+                  size="large"
+                  className="uppercase tracking-wide mt-2"
+                >
+                  Get Started
+                </Button>
+              </Link>
+            )}
+            {props.serverProgress === UserProgress.SignedUp && (
+              <Link href="/flow/getting_started/install" passHref={true}>
+                <Button
+                  type="primary"
+                  size="large"
+                  className="uppercase tracking-wide mt-2"
+                >
+                  Almost Done
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
-      </div>
-    </>
+        <div className="bg-white p-1 md:p-8 mb-4 md:mb-8 lg:mb-12">
+          <div className="text-center m-4 md:m-8 lg:m-12">
+            <SyncronizeDiagram />
+          </div>
+        </div>
+        <div className="bg-white p-1 md:p-8 mb-4 md:mb-8 lg:mb-12">
+          <div className="text-center m-4 md:m-8 lg:m-12">
+            <h1 className="uppercase font-semibold tracking-wide text-2xl sm:text-3xl md:text-5xl lg:text-7xl mb-4 md:m-8 lg:m-12">
+              Stop{" "}
+              <TextLoop
+                children={[
+                  "Wasting Time",
+                  "Redeploying",
+                  "Manually Versioning",
+                ]}
+              />
+            </h1>
+          </div>
+        </div>
+        <div className="bg-white p-1 md:p-8 mb-4 md:mb-8 lg:mb-12">
+          <div className="text-center m-4 md:m-8 lg:m-12">
+            <div id="getting-started" className="w-3/5 m-auto">
+              <Divider>
+                <span className="uppercase font-semibold tracking-wide text-1xl sm:text-2xl md:text-3xl lg:text-5xl">
+                  How To Get Started
+                </span>
+              </Divider>
+              <GSSteps />
+            </div>
+          </div>
+        </div>
+      </Content>
+    </Layout>
   );
 }
 
@@ -108,7 +118,7 @@ function SyncronizeDiagram() {
 function GSSteps() {
   const router = useRouter();
   const [progress, setProgress] = useState<number>(0);
-  const [session, loading]: [SessionWithToken | null, boolean] = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     async function getProgress() {
@@ -161,7 +171,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const newProgress = await getCurrentProgress(session);
 
   return {
-    props: { serverProgress: newProgress },
+    props: {
+      session,
+      serverProgress: newProgress,
+    },
   };
 };
 
