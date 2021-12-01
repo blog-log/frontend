@@ -12,11 +12,10 @@ export function getSession(session: Session, token: User | JWT) {
 }
 
 // persist accesstoken into jwt token
-export function getJwt(token: JWT, user: User, account: Account) {
+export function getJwt(token: JWT, account: Account | undefined) {
   // Initial sign in
-  if (account && user) {
-    token.accessToken = account.accessToken;
-    return token;
+  if (account) {
+    token.accessToken = account.access_token;
   }
 
   return token;

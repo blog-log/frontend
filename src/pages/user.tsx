@@ -2,8 +2,9 @@ import type { GetServerSideProps } from "next";
 import type { Session } from "next-auth";
 import Link from "next/link";
 import Image from "next/image";
-import { useSession, getSession } from "next-auth/client";
+import { useSession, getSession } from "next-auth/react";
 import {
+  Layout,
   Row,
   Col,
   Card,
@@ -24,10 +25,12 @@ import {
   IInstallation,
 } from "../modules/signup/services/github";
 import { useRouter } from "next/router";
-import { SessionWithToken } from "../common/types/session";
-import { repoIdToName, repoNameToId } from "../common/utils/repo";
+import { repoIdToName } from "../common/utils/repo";
 import { getRepoSlug } from "../common/utils/path";
+import Header from "../common/components/elements/Header/Header";
+import { DeviceType } from "../common/utils/device";
 
+const { Content } = Layout;
 const { Title } = Typography;
 
 interface IUser {
@@ -35,11 +38,13 @@ interface IUser {
   installations: IInstallation[];
   repos: IRepo[];
   docs: IDocument[];
+  deviceType: DeviceType;
 }
 
 function User(props: IUser) {
   const router = useRouter();
-  const [session, loading]: [SessionWithToken | null, boolean] = useSession();
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
 
   if (loading) return null;
 
@@ -48,98 +53,105 @@ function User(props: IUser) {
   if (!loading && !session) return <p>Access Denied</p>;
 
   return (
-    <div className="bg-white p-3 md:p-8 mb-4 md:mb-8 lg:mb-12">
-      {router.query?.setup_action && router.query?.setup_action === "install" && (
-        // onClose removes any query params so on refresh alert will not show again
-        <InstallAlert onClose={() => router.replace("/user")} />
-      )}
+    <Layout>
+      <Header deviceType={props.deviceType} />
+      <Content className="p-2 md:p-6 lg:p-12">
+        <div className="bg-white p-3 md:p-8 mb-4 md:mb-8 lg:mb-12">
+          {router.query?.setup_action &&
+            router.query?.setup_action === "install" && (
+              // onClose removes any query params so on refresh alert will not show again
+              <InstallAlert onClose={() => router.replace("/user")} />
+            )}
 
-      {router.query?.setup_action && router.query?.setup_action === "update" && (
-        // onClose removes any query params so on refresh alert will not show again
-        <UpdateAlert onClose={() => router.replace("/user")} />
-      )}
+          {router.query?.setup_action &&
+            router.query?.setup_action === "update" && (
+              // onClose removes any query params so on refresh alert will not show again
+              <UpdateAlert onClose={() => router.replace("/user")} />
+            )}
 
-      {!router.query?.setup_action && props.installations.length === 0 && (
-        <NeedInstallAlert />
-      )}
+          {!router.query?.setup_action && props.installations.length === 0 && (
+            <NeedInstallAlert />
+          )}
 
-      <Divider orientation="left">Installations</Divider>
-      <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {props.installations &&
-          props.installations.map((installation, index) => (
-            <div key={index}>
-              <Link passHref href={installation.url}>
-                <a>
-                  <Card hoverable key={`${index}-${installation.url}`}>
-                    <Title level={5}>{installation.account}</Title>
-                  </Card>
-                </a>
-              </Link>
-            </div>
-          ))}
-      </div>
+          <Divider orientation="left">Installations</Divider>
+          <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {props.installations &&
+              props.installations.map((installation, index) => (
+                <div key={index}>
+                  <Link passHref href={installation.url}>
+                    <a>
+                      <Card hoverable key={`${index}-${installation.url}`}>
+                        <Title level={5}>{installation.account}</Title>
+                      </Card>
+                    </a>
+                  </Link>
+                </div>
+              ))}
+          </div>
 
-      <Divider orientation="left">Repositories</Divider>
-      <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {props.repos &&
-          props.repos.map((repo, index) => (
-            <div key={index}>
-              <Link passHref href={repo.id}>
-                <a>
-                  <Card hoverable key={`${index}-${repo}`} title={repo.id}>
-                    {repo.error && (
-                      <Alert
-                        message="Error"
-                        type="error"
-                        showIcon
-                        description={JSON.stringify(repo.error)}
+          <Divider orientation="left">Repositories</Divider>
+          <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {props.repos &&
+              props.repos.map((repo, index) => (
+                <div key={index}>
+                  <Link passHref href={repo.id}>
+                    <a>
+                      <Card hoverable key={`${index}-${repo}`} title={repo.id}>
+                        {repo.error && (
+                          <Alert
+                            message="Error"
+                            type="error"
+                            showIcon
+                            description={JSON.stringify(repo.error)}
+                          />
+                        )}
+                        {repo.warning &&
+                          repo.warning.length > 0 &&
+                          repo.warning[0] !== null && (
+                            <Alert
+                              message="Warning"
+                              type="warning"
+                              showIcon
+                              description={JSON.stringify(repo.warning)}
+                            />
+                          )}
+                        {!repo.error && !repo.warning && (
+                          <Alert message="Success" type="success" showIcon />
+                        )}
+                      </Card>
+                    </a>
+                  </Link>
+                </div>
+              ))}
+          </div>
+          <Divider orientation="left">Documents</Divider>
+          <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {props.docs &&
+              props.docs.map((doc, index) => (
+                <div key={index}>
+                  <Popover
+                    content={
+                      <DocumentPopoverContent
+                        ghLink={`${doc.repo}/blob/${doc.branch}/${doc.path}`}
+                        blLink={getRepoSlug(doc)}
                       />
-                    )}
-                    {repo.warning &&
-                      repo.warning.length > 0 &&
-                      repo.warning[0] !== null && (
-                        <Alert
-                          message="Warning"
-                          type="warning"
-                          showIcon
-                          description={JSON.stringify(repo.warning)}
-                        />
-                      )}
-                    {!repo.error && !repo.warning && (
-                      <Alert message="Success" type="success" showIcon />
-                    )}
-                  </Card>
-                </a>
-              </Link>
-            </div>
-          ))}
-      </div>
-      <Divider orientation="left">Documents</Divider>
-      <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {props.docs &&
-          props.docs.map((doc, index) => (
-            <div key={index}>
-              <Popover
-                content={
-                  <DocumentPopoverContent
-                    ghLink={`${doc.repo}/blob/${doc.branch}/${doc.path}`}
-                    blLink={getRepoSlug(doc)}
-                  />
-                }
-                trigger="click"
-              >
-                <Card
-                  hoverable
-                  key={`${index}-${doc.repo}-${doc.path}`}
-                  title={doc.title}
-                >
-                  content description
-                </Card>
-              </Popover>
-            </div>
-          ))}
-      </div>
-    </div>
+                    }
+                    trigger="click"
+                  >
+                    <Card
+                      hoverable
+                      key={`${index}-${doc.repo}-${doc.path}`}
+                      title={doc.title}
+                    >
+                      content description
+                    </Card>
+                  </Popover>
+                </div>
+              ))}
+          </div>
+        </div>
+      </Content>
+    </Layout>
   );
 }
 
